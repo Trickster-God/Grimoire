@@ -1,0 +1,71 @@
+from docx import Document
+from docx.shared import Pt, RGBColor
+from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+import random
+
+# Initialize the document
+doc = Document()
+
+# Styles and decorative elements
+decorative_symbols = [
+    "*~*~*~*~*~*~*~*~*",
+    "~*~*~*~*~*~*~*~*~",
+    "~~~***~~~***~~~",
+    "***~~~***~~~***",
+    "~~~~~~~***~~~~~~~",
+]
+
+# Function to add a page with a unique layout
+def add_magical_page(doc, page_num):
+    # Add a page title
+    title = doc.add_heading(f'Grimoire Page {page_num}', level=1)
+    title.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    
+    # Style title
+    run = title.runs[0]
+    run.font.size = Pt(24)
+    run.font.color.rgb = RGBColor(139, 0, 139)  # Dark magenta color
+
+    # Add a decorative symbol
+    symbol = doc.add_paragraph(random.choice(decorative_symbols))
+    symbol.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    run = symbol.runs[0]
+    run.font.size = Pt(20)
+    run.font.color.rgb = RGBColor(165, 42, 42)  # Brownish color
+
+    # Add body text with a magical theme
+    content = doc.add_paragraph()
+    content.alignment = WD_PARAGRAPH_ALIGNMENT.JUSTIFY
+    content_text = (
+        "In the realm beyond the veil, where shadows whisper secrets, "
+        "lies the ancient codex of forgotten lore. Each page holds the power of the elements, "
+        "woven with spells and enchantments that bind the fabric of reality itself. "
+        "Seek the knowledge within, but tread carefully, for the words are alive, "
+        "dancing with the magic of ages past."
+    )
+    content.add_run(content_text)
+
+    # Style body text
+    run = content.runs[0]
+    run.font.size = Pt(12)
+    run.font.color.rgb = RGBColor(75, 0, 130)  # Indigo color
+
+    # Add another decorative symbol at the end of the page
+    end_symbol = doc.add_paragraph(random.choice(decorative_symbols))
+    end_symbol.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
+    run = end_symbol.runs[0]
+    run.font.size = Pt(20)
+    run.font.color.rgb = RGBColor(0, 100, 0)  # Dark green color
+
+# Create 10 pages with unique layouts
+for i in range(1, 11):
+    add_magical_page(doc, i)
+    # Add a page break after each page except the last one
+    if i < 10:
+        doc.add_page_break()
+
+# Save the document
+file_path_grimoire_pages = "/mnt/data/magical_codex_grimoire_for_pages.docx"
+doc.save(file_path_grimoire_pages)
+
+file_path_grimoire_pages
